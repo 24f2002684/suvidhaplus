@@ -57,6 +57,16 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        kiosk: {
+          electricity: "hsl(var(--kiosk-electricity))",
+          water: "hsl(var(--kiosk-water))",
+          gas: "hsl(var(--kiosk-gas))",
+          complaint: "hsl(var(--kiosk-complaint))",
+          track: "hsl(var(--kiosk-track))",
+          success: "hsl(var(--kiosk-success))",
+          pending: "hsl(var(--kiosk-pending))",
+          progress: "hsl(var(--kiosk-progress))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
