@@ -1,9 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Zap, Droplets, Flame, FileText, Search } from "lucide-react";
+import { Zap, Droplets, Flame, FileText, Search, ShieldCheck } from "lucide-react";
 import { KioskLayout } from "@/components/KioskLayout";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 const services = [
   { key: "electricityBill", icon: Zap, path: "/bill/electricity", colorVar: "var(--kiosk-electricity)" },
@@ -11,11 +12,13 @@ const services = [
   { key: "gasService", icon: Flame, path: "/bill/gas", colorVar: "var(--kiosk-gas)" },
   { key: "lodgeComplaint", icon: FileText, path: "/complaint", colorVar: "var(--kiosk-complaint)" },
   { key: "trackApplication", icon: Search, path: "/track", colorVar: "var(--kiosk-track)" },
+  { key: "adminDashboard", icon: ShieldCheck, path: "/admin", colorVar: "var(--primary)" },
 ];
 
 const Index: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const { mobileNumber } = useAuth();
 
   return (
     <KioskLayout showBack={false}>
@@ -24,6 +27,11 @@ const Index: React.FC = () => {
           <h2 className="text-2xl font-semibold text-muted-foreground">
             {t("tagline")}
           </h2>
+          {mobileNumber && (
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t("loggedInAs")}: <span className="font-bold text-foreground">{mobileNumber}</span>
+            </p>
+          )}
         </div>
 
         <div className="grid w-full grid-cols-2 gap-5 sm:grid-cols-3">
@@ -33,7 +41,7 @@ const Index: React.FC = () => {
               <motion.button
                 key={service.key}
                 onClick={() => navigate(service.path)}
-                className="group flex flex-col items-center gap-4 rounded-2xl border-2 border-border bg-card p-8 shadow-sm transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                className="group flex flex-col items-center gap-4 rounded-2xl border-2 border-border bg-card p-8 shadow-sm transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring min-h-[160px]"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: i * 0.08 }}
